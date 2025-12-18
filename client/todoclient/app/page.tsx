@@ -1,11 +1,20 @@
 "use client";
 import link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   // const worklist = ["Homework", "Food", "Sleep"];
 
   const [worklist, setworklist] = useState<string[]>([]);
+  const [ActiveTask, setActiveTask] = useState<string>("");
+
+  const handeDelete = () => {
+    console.log(ActiveTask);
+    const templist = worklist;
+    templist.splice(templist.indexOf(ActiveTask), 1);
+    setworklist(templist);
+    console.log(worklist);
+  }
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
@@ -14,7 +23,9 @@ export default function Home() {
         <div className="space-y-1 mb-4 text-sm text-gray-700">
           {
             worklist.map((e) => (
-              <p>{e}</p>
+              <p onClick={() => {
+                setActiveTask(e);
+              }}>{e}</p>
             ))
           }
         </div>
@@ -26,7 +37,11 @@ export default function Home() {
               const taskInput = document.getElementById("taskInput") as HTMLInputElement;
               setworklist([...worklist, taskInput.value]);
             }}>Add</button>
-          <button className="flex-1 bg-red-500 text-white py-2 rounded-lg">Delete</button>
+          <button
+            onClick={() => {
+              handeDelete();
+            }}
+            className="flex-1 bg-red-500 text-white py-2 rounded-lg">Delete</button>
         </div>
 
 
