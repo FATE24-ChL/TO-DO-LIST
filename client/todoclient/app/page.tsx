@@ -13,6 +13,7 @@ export default function Home() {
   const handeDelete = () => {
     console.log(ActiveTask);
     const templist = worklist;
+
     templist.splice(templist.indexOf(ActiveTask), 1);
     console.log(templist);
     // setworklist(templist);
@@ -21,8 +22,12 @@ export default function Home() {
 
   const addTask = () => {
     const taskInput = document.getElementById("taskInput") as HTMLInputElement;
-    setworklist([...worklist, taskInput.value]);
-    taskInput.value = "";
+    if (taskInput.value == "") {
+      alert("Please enter a task");
+    }
+    else {
+      setworklist([...worklist, taskInput.value]);
+    }
   };
 
   return (
