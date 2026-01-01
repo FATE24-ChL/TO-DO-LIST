@@ -20,13 +20,22 @@ export default function Home() {
     setworklist([...templist]);
   }
 
-  const addTask = () => {
+  const addTask = async () => {
     const taskInput = document.getElementById("taskInput") as HTMLInputElement;
     if (taskInput.value == "") {
       alert("Please enter a task");
     }
     else {
+
       setworklist([...worklist, taskInput.value]);
+      const response = await fetch("http://localhost:8000/api/database/add-task", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ task: taskInput.value }),
+      })
+      console.log(response.body);
     }
   };
 

@@ -15,6 +15,7 @@ route.post('/add-task', (req, res) => {
     }
     else {
         tasks.push(task);
+        console.log(tasks);
         return res.json({ message: 'Task added successfully', tasks });
     }
 });
