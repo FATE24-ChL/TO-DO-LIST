@@ -1,6 +1,6 @@
 "use client";
 import link from "next/link";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 export default function Home() {
 
@@ -9,6 +9,15 @@ export default function Home() {
   const [worklist, setworklist] = useState<string[]>([]);
   const [ActiveTask, setActiveTask] = useState<string>("");
   // const [templist, settemplist] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const response = await fetch("http://localhost:8000/api/database/get-tasks");
+      const data = await response.json();
+      setworklist(data.tasks);
+    };
+    fetchTasks();
+  }, []);
 
   const handeDelete = () => {
     console.log(ActiveTask);
