@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 
 const route = express.Router();
 const tasks = ['task1', 'task2', 'task3'];
@@ -7,7 +8,6 @@ const tasks = ['task1', 'task2', 'task3'];
 route.get('/get-tasks', (req, res) => {
     res.json({ tasks });
 })
-
 route.post('/add-task', (req, res) => {
     const task = req.body.task;
     if (!task) {
@@ -18,6 +18,18 @@ route.post('/add-task', (req, res) => {
         console.log(tasks);
         return res.json({ message: 'Task added successfully', tasks });
     }
+});
+route.delete('/delete-task', (req, res) => {
+  const task = req.body.task;
+
+  if (!task) {
+    return res.status(400).json({ error: 'No task provided' });
+  }
+ else{
+    tasks.pop(task);
+    console.log(tasks);
+    return res.json({ message: 'Task added successfully', tasks });
+ }
 });
 
 export default route;

@@ -1,7 +1,6 @@
 "use client";
 import link from "next/link";
 import { use, useEffect, useState } from "react";
-
 export default function Home() {
 
   // const worklist = ["Homework", "Food", "Sleep"];
@@ -19,7 +18,7 @@ export default function Home() {
     fetchTasks();
   }, []);
 
-  const handeDelete = () => {
+  const handeDelete =() => {
     console.log(ActiveTask);
     const templist = worklist;
 
