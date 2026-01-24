@@ -1,9 +1,17 @@
 import express from 'express';
-import mongoose from 'mongoose';
+import mongoose, { mongo, Schema } from 'mongoose';
 
 const route = express.Router();
 const tasks = ['task1', 'task2', 'task3'];
 
+const databaseUrl = "mongodb://127.0.0.1:27017/todoapp"
+mongoose.connect(databaseUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('Could not connect to MongoDB...', err));
+
+const shema = new mongoose.Schema({
+    task: String
+});
 
 route.get('/get-tasks', (req, res) => {
     res.json({ tasks });
@@ -14,22 +22,23 @@ route.post('/add-task', (req, res) => {
         return res.status(400).json({ error: 'No task provided' });
     }
     else {
+        shema.create({ task: task });
         tasks.push(task);
         console.log(tasks);
         return res.json({ message: 'Task added successfully', tasks });
     }
 });
 route.delete('/delete-task', (req, res) => {
-  const task = req.body.task;
+    const task = req.body.task;
 
-  if (!task) {
-    return res.status(400).json({ error: 'No task provided' });
-  }
- else{
-    tasks.pop(task);
-    console.log(tasks);
-    return res.json({ message: 'Task added successfully', tasks });
- }
+    if (!task) {
+        return res.status(400).json({ error: 'No task provided' });
+    }
+    else {
+        tasks.pop(task);
+        console.log(tasks);
+        return res.json({ message: 'Task added successfully', tasks });
+    }
 });
 
 export default route;
