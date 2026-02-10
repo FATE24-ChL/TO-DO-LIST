@@ -14,8 +14,15 @@ const shema = new mongoose.Schema({
 });
 
 route.get('/get-tasks', (req, res) => {
-    res.json({ tasks });
-})
+    shema.find({}, (err, tasks) => {
+        if (err) {
+            return res.status(500).json({ error: 'Error fetching tasks' });
+        }
+        else {
+            return res.json({ tasks });
+        }
+    })
+});
 route.post('/add-task', (req, res) => {
     const task = req.body.task;
     if (!task) {
