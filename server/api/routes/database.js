@@ -38,13 +38,21 @@ route.post('/add-task', (req, res) => {
 route.delete('/delete-task', (req, res) => {
     const task = req.body.task;
 
+
     if (!task) {
         return res.status(400).json({ error: 'No task provided' });
     }
     else {
-        tasks.pop(task);
-        console.log(tasks);
-        return res.json({ message: 'Task added successfully', tasks });
+        shema.deleteOne({ task: task }, (err, result) => {
+            if (err) {
+                return res.status(500).json({ error: 'Error deleting task' });
+            }
+            else {
+                tasks.pop(task);
+                console.log(tasks);
+                return res.json({ message: 'Task deleted successfully', tasks });
+            }
+        });
     }
 });
 
