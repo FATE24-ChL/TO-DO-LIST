@@ -4,7 +4,7 @@ import mongoose, { mongo, Schema } from 'mongoose';
 const route = express.Router();
 const tasks = ['task1', 'task2', 'task3'];
 
-const databaseUrl = "mongodb://127.0.0.1:27017/todoapp"
+const databaseUrl = "mongodb://127.0.0.1:27017/todoapp?DirectConnection=true&authSource=admin&retryWrites=true&w=majority";
 mongoose.connect(databaseUrl, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
